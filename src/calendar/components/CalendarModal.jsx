@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addHours } from "date-fns";
+import { addHours, differenceInSeconds } from "date-fns";
 
 import Modal from "react-modal"
 
@@ -57,6 +57,26 @@ export const CalendarModal = () => {
         setIsOpen(false)
     }
 
+    const onSubmit = (event) => {
+        event.preventDefault()
+
+        const diferencce = differenceInSeconds(formValues.end, formValues.start)
+        console.log({ diferencce })
+
+        if (isNaN(diferencce) || diferencce <= 0) {
+            console.log('Error en las fechas')
+            return
+        }
+
+        if (formValues.length <= 0) return
+
+        console.log(formValues, 'todo ok!')
+
+        //TODO:
+        /* remover errores en pantalla
+        cerrar modal */
+    }
+
     return (
         <Modal
             isOpen={isOpen}
@@ -70,7 +90,7 @@ export const CalendarModal = () => {
 
             <h1> Nuevo evento </h1>
             <hr />
-            <form className="container">
+            <form className="container" onSubmit={onSubmit}>
 
                 <div className="form-group mb-2">
                     <label>Fecha y hora inicio</label>
