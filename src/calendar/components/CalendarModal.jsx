@@ -68,7 +68,7 @@ export const CalendarModal = () => {
             return
         }
 
-        if (formValues.length <= 0) return
+        if (formValues.title.length <= 0) return
 
         console.log(formValues, 'todo ok!')
 
