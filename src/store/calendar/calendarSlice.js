@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { addHours } from 'date-fns'
+import { addHours, startOfYear } from 'date-fns'
 
 //!Este tempEvent es tempral, vendra del backend 
 const tempEvent = {
@@ -27,11 +27,45 @@ export const calendarSlice = createSlice({
     },
 
     reducers: {
+
         onSetActiveEvent: (state, { payload }) => {
             state.activeEvent = payload
         },
+
+        //* REDUCER QUE CREA UN NUEVO EVENTO
+        onAddNewEvent: (state, { payload }) => {
+
+            state.events.push(payload)
+
+            state.activeEvent = null
+
+        },
+
+        //* REDUCER PARA ACTUALIZAR UN EVENTO
+        onUpdateEvent: (state, { payload }) => {
+
+            state.events = state.events.map(event => {
+                if (event._id == payload._id) {
+                    return payload
+                }
+
+                return event
+            })
+
+        },
+
+        //*REDUCER PARA BORRAR EVENTO
+        onDeleteEvenet: (state) => {
+
+            if (state.activeEvent) {
+                state.events = state.events.filter(event => event._id !== state.activeEvent._id)
+                state.activeEvent = null
+            }
+
+        }
+
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { onSetActiveEvent } = calendarSlice.actions
+export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvenet } = calendarSlice.actions

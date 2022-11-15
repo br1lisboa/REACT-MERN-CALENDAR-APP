@@ -10,9 +10,7 @@ export const useUiStore = () => {
 
     // Fn para abrir el modal
     const openDateModal = () => {
-
         dispatch(onOpenDataModel())
-
     }
 
     //Fn para cerrar modal
