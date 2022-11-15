@@ -5,24 +5,12 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { addHours } from "date-fns";
 import { NavBar, CalendarEvent, CalendarModal } from "../"
 import { getMessagesES, localizer } from '../../helpers';
-import { useUiStore } from '../../hooks';
+import { useCalendarStore, useUiStore } from '../../hooks';
 
-
-
-
-const events = [{
-    title: 'Cumple de Oli',
-    notes: 'Darle un premio',
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: '#fafafa',
-    user: {
-        _id: '123',
-        name: 'Bruno'
-    }
-}]
 
 export const CalendarPage = () => {
+
+    const { events } = useCalendarStore()
 
     const { openDateModal } = useUiStore()
 
@@ -42,7 +30,6 @@ export const CalendarPage = () => {
         }
 
     }
-
 
     const onDoubleClick = () => {
         openDateModal()
