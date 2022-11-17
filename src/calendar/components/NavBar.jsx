@@ -1,13 +1,9 @@
+import { useDispatch, useSelector } from "react-redux"
 import { useAuthStore } from "../../hooks"
 
 export const NavBar = () => {
 
     const { user, startLogout } = useAuthStore()
-
-    const onHandelOut = (e) => {
-        e.preventDefault()
-        startLogout()
-    }
 
     return (
         <div className="navbar navbar-dark bg-dark mb-4 px-4">
@@ -19,7 +15,7 @@ export const NavBar = () => {
             </span>
 
             <button className="btn btn-outline-danger"
-                onClick={onHandelOut}
+                onClick={startLogout}
             >
                 <i className="fas fa-sign-out-alt"></i>
                 &nbsp;
