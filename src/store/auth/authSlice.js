@@ -23,9 +23,18 @@ export const authSlice = createSlice({
             state.status = 'auth'
             state.user = action.payload
             state.errorMessage = undefined
+        },
+        //* ESTE REDUCER SETEA EL ESTADO EN NO AUTH POR FALTA DE CREDENCIALES
+        onLogout: (state, { payload }) => {
+            state.status = 'not-auth'
+            state.user = {}
+            state.errorMessage = payload
+        },
+        clearErrorMessage: (state) => {
+            state.errorMessage = undefined
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { onChecking, onLogin } = authSlice.actions
+export const { onChecking, onLogin, onLogout, clearErrorMessage } = authSlice.actions
