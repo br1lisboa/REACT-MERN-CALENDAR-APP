@@ -1,4 +1,4 @@
-import { useForm } from '../../hooks';
+import { useAuthStore, useForm } from '../../hooks';
 import './LoginPage.css';
 
 //* DATOS NECESARIOS PARA UTILIZAR NUESTRO CUSTOMHOOK
@@ -17,6 +17,9 @@ const registerFormFields = {
 
 export const LoginPage = () => {
 
+    //* HOOK ASYNC PARA AUTH
+    const { startLogin } = useAuthStore()
+
     //* CUSTOM HOOK FORM
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm(loginFormFields) //* EL ESTADO INICIAL DE NUESTRO HOOK
     const { registerName, registerEmail, registerPassword, registerPassword2, onInputChange: onRegisterInputChange } = useForm(registerFormFields)
@@ -24,7 +27,7 @@ export const LoginPage = () => {
     const loginSubmit = (event) => {
 
         event.preventDefault()
-        console.log({ loginEmail, loginPassword })
+        startLogin({ email: loginEmail, password: loginPassword })
 
     }
 
@@ -40,7 +43,7 @@ export const LoginPage = () => {
         <div className="container login-container">
             <div className="row">
 
-                //* FORMULARIO DE INGRESO
+                {/* FORMULARIO DE INGRESO */}
                 <div className="col-md-6 login-form-1">
                     <h3>Ingreso</h3>
                     <form onSubmit={loginSubmit}>
@@ -74,7 +77,7 @@ export const LoginPage = () => {
                     </form>
                 </div>
 
-                //* FORMULARIO DE REGISTRO
+                {/* FORMULARIO DE REGISTRO */}
                 <div className="col-md-6 login-form-2">
                     <h3>Registro</h3>
                     <form onSubmit={registerSubmit}>
