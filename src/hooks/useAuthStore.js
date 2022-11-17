@@ -34,6 +34,28 @@ export const useAuthStore = () => {
 
     }
 
+    //* PROCESO DE REGISTRO
+    const startRegister = async ({ name, email, password }) => {
+
+        dispatch(onChecking())
+
+        try {
+
+            const { data } = await calendarApi.post('/auth/new', { name, email, password })
+            console.log(data)
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('token-init-date', new Date().getTime())
+            dispatch(onLogin({ name: data.name, uid: data.uid }))
+
+        } catch (error) {
+            dispatch(onLogout(error.response.data?.msg || 'Algunos de los campos no son correctos'))
+            setTimeout(() => {
+                dispatch(clearErrorMessage())
+            }, 10)
+        }
+
+    }
+
     return {
         //* PROPIEDADES
         status,
@@ -43,6 +65,7 @@ export const useAuthStore = () => {
 
 
         //* METODOS >> ACCIONES QUE PODRAN LLAMAR PARA INTERACTUAR CON NUESTRO STORE
-        startLogin
+        startLogin,
+        startRegister
     }
 }

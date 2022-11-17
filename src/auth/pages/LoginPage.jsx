@@ -20,7 +20,7 @@ const registerFormFields = {
 export const LoginPage = () => {
 
     //* HOOK ASYNC PARA AUTH
-    const { startLogin, errorMessage } = useAuthStore()
+    const { startLogin, startRegister, errorMessage } = useAuthStore()
 
     //* CUSTOM HOOK FORM
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm(loginFormFields) //* EL ESTADO INICIAL DE NUESTRO HOOK
@@ -33,7 +33,10 @@ export const LoginPage = () => {
 
     const registerSubmit = (event) => {
         event.preventDefault()
-        console.log({ registerName, registerEmail, registerPassword, registerPassword2 })
+        if (registerPassword !== registerPassword2) {
+            Swal.fire('Error en registro', 'Constraseñas no son iguales', 'error')
+        }
+        startRegister({ name: registerName, email: registerEmail, password: registerPassword })
     }
 
     useEffect(() => {
