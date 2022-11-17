@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import Swal from 'sweetalert2'
 import { useAuthStore, useForm } from '../../hooks';
 import './LoginPage.css';
 
@@ -18,25 +20,29 @@ const registerFormFields = {
 export const LoginPage = () => {
 
     //* HOOK ASYNC PARA AUTH
-    const { startLogin } = useAuthStore()
+    const { startLogin, errorMessage } = useAuthStore()
 
     //* CUSTOM HOOK FORM
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm(loginFormFields) //* EL ESTADO INICIAL DE NUESTRO HOOK
     const { registerName, registerEmail, registerPassword, registerPassword2, onInputChange: onRegisterInputChange } = useForm(registerFormFields)
 
     const loginSubmit = (event) => {
-
         event.preventDefault()
         startLogin({ email: loginEmail, password: loginPassword })
-
     }
 
     const registerSubmit = (event) => {
-
         event.preventDefault()
         console.log({ registerName, registerEmail, registerPassword, registerPassword2 })
-
     }
+
+    useEffect(() => {
+        if (errorMessage !== undefined) {
+            Swal.fire('Error en la autenticacion', errorMessage, 'error') //*> El ultimo param es el icono de sw
+        }
+
+    }, [errorMessage])
+
 
 
     return (
